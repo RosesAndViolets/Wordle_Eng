@@ -49,13 +49,13 @@ body{
     background: var(--right)
 }
 
-/* .animated {
+.animated {
     animation: flip 0.5s ease;
 }
 
 @keyframes flip {
     0% {
-      transform: scaleY(1);
+      transform: scaleY(1); 
     }
     50% {
       transform: scaleY(0);
@@ -63,4 +63,4 @@ body{
     100% {
       transform: scaleY(1);
     }
-  } */
+  }
