@@ -1,9 +1,9 @@
 import { testDictionary, realDictionary } from "./dictionary.js";
 
 // testing
-console.log('test dictionary:', testDictionary);
+console.log('real dictionary:', realDictionary);
 
-const dictionary = testDictionary;
+const dictionary = realDictionary;
 const state = {
   secret: dictionary[Math.floor(Math.random() * dictionary.length)],
   grid: Array(6)
@@ -48,6 +48,9 @@ function registerKeyboardEvents(){
         const key = e.key;
         if (key === 'Enter') {
             if (state.currentCol === 5){
+                for (let i = 0; i < 5; i++){
+                    document.getElementById(`box${state.currentRow}${i}`).classList.remove('popAnimated');
+                }
                 const word = getCurrentWord(); //TODO
                 if (isWordValid(word)){
                     revealWord(word);
@@ -104,7 +107,7 @@ function revealWord(guess){
         if (isWinner){
             alert('You win!');
         }else if(isGameOver){
-            alert('Game Over!');
+            alert('Game Over! The answer was \n\n' + state.secret);
         }
     }, 3 * animation_duration);
 }
@@ -114,15 +117,31 @@ function isLetter(key){
 }
 
 function addLetter(letter){
+    const row = state.currentRow;
+    const col = state.currentCol;
+    const box = document.getElementById(`box${row}${col}`);
+
+    // const animation_duration = 10;
+    // setTimeout(() => {
+    // if (state.currentCol === 5) return;
+    // state.grid[state.currentRow][state.currentCol] = letter;
+    // state.currentCol++;}, 0);
     if (state.currentCol === 5) return;
     state.grid[state.currentRow][state.currentCol] = letter;
     state.currentCol++;
+
+    box.classList.add('popAnimated');
 }
 
 function removeLetter(){
+    const row = state.currentRow;
+    const col = state.currentCol - 1;
+    const box = document.getElementById(`box${row}${col}`);
+
     if (state.currentCol === 0) return;
     state.grid[state.currentRow][state.currentCol - 1] = '';
     state.currentCol--;
+    box.classList.remove('popAnimated');
 }
 
 function startup() {
